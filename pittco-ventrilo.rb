@@ -12,9 +12,26 @@ RECORD = [VENTRILO_TYPE, PITTCO_DOMAIN].join(".")
 SRV = Resolv::DNS::Resource::IN::SRV
 LOGGER = Logger.new STDOUT
 
+
+def display_error_and_exit error
+  require 'java'
+  message = ["<html>Unable to resolve the Pittco Ventrilo server address :-(",
+             "You can always try <b>ventrilo.pittco.org</b> on the default port, but it may not work.",
+             "",
+             "#{error.message} (#{error.class})</html>"].join("<br/>")
+  title = "Cannot find Pittco Ventrilo"
+  javax.swing.JOptionPane.show_message_dialog(nil, message, title,
+                                              javax.swing.JOptionPane::ERROR_MESSAGE)
+  exit 1
+end
+
 resolver = Resolv::DNS.new
 
-result = resolver.getresource(RECORD, SRV)
+begin
+  result = resolver.getresource(RECORD, SRV)
+rescue Resolv::ResolvError => e
+  display_error_and_exit e
+end
 
 LOGGER.info result
 

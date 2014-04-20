@@ -105,11 +105,11 @@ configuration do |c|
 	# Undocumented option 'mac_icon_path'
 	# default value: nil
 	#
-	#c.mac_icon_path = nil
+	c.mac_icon_path = 'assets/pittco-ventrilo-launcher.icns'
 
 	# Undocumented option 'windows_icon_path'
 	# default value: nil
 	#
-	#c.windows_icon_path = nil
+	c.windows_icon_path = 'assets/ventrilo-with-pittco-head.ico'
 
 end
